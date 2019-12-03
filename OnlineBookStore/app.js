@@ -1,15 +1,24 @@
 var createError = require('http-errors');
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars');
-var indexRouter = require('./routes/home');
-
-
 var app = express();
+var passport = require('passport');
+var flash = require('connect-flash');
+require('./models/passport')(passport);
+//const mysql = require('mysql');
+var indexController = require('./routes/home');
+var shopController = require('./routes/shop');
+var authorController = require('./routes/author');
+var singleProductController = require('./routes/single-product');
+//var productController = require('./routes/product');
 
-const mysql = require('mysql');
+
+
+require('custom-env').env()
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -20,14 +29,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-
-
-const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'mori7890',
-  password: 'shuxruri',
-  database:'mysql'
+app.use(session({
+  secret:'secret'
+}))
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+require('./routes/login')(app,passport);
+app.use('/', indexController);
+app.use('/shop',shopController);
+app.use('/author',authorController);
+app.use('/single-product',singleProductController);
+/*const con = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database:process.env.DB_DATABASE
 });
 con.connect((err) => {
   if(err){
@@ -38,8 +55,9 @@ con.connect((err) => {
     if (err) throw err;
     console.log(result);
   });
-});
-app.use('/shop', function (req, res, next) {
+});*/
+
+/*app.use('/shop', function (req, res, next) {
 
   con.query('SELECT * FROM product',  (err, result)=> {
     if (err) throw err;
@@ -48,10 +66,10 @@ app.use('/shop', function (req, res, next) {
    // console.log(result);
    
   });
-  });
-app.use('/product/:id', function (req, res, next) {
+  });*/
+/*app.use('/product/:id', function(req, res, next) {
 
-  var sql = 'SELECT * FROM product WHERE  = '+mysql.escape(req.params.id);
+  var sql = 'SELECT * FROM product WHERE id = '+mysql.escape(req.params.id);
     con.query(sql,  (err, result)=> {
       if (err) throw err;
       res.render('product', { title:result[0].name,name:result[0].name,img:result[0].img,author:result[0].author,type:result[0].type,price:result[0].price,description:result[0].description });
@@ -74,15 +92,7 @@ var sql = 'SELECT * FROM product WHERE id = '+mysql.escape(req.params.id);
  
 });
 });
-app.use('/author/:id', function (req, res, next) {
-
-  var sql = 'SELECT * FROM product WHERE author = '+mysql.escape(req.params.id);
-    con.query(sql,  (err, result)=> {
-      if (err) throw err;
-      res.render('shop', { results:result});
-    
-  });
-  });
+app.use('/author,);
   app.use('/type/:id', function (req, res, next) {
 
     var sql = 'SELECT * FROM product WHERE type = '+mysql.escape(req.params.id);
