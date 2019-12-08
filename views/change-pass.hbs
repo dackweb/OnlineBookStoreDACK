@@ -1,0 +1,30 @@
+  <div class="breadcrumb">
+        <div class="container">
+            <a class="breadcrumb-item" href="/">Home</a>
+            <span class="breadcrumb-item active">Login</span>
+        </div>
+    </div>
+    <section class="static about-sec">
+        <div class="container">
+            <h1> Đổi mật khẩu</h1>
+          
+        <form action="/change_password" method="post">
+            <div>
+                <label>Nhập mật khẩu cũ</label>
+                <input type="password" name="password"/>
+            </div>
+            <div>
+                <label> Nhập Mật khẩu mới</label>
+                <input type="password" name="password2"/>
+            </div>
+            <label> Nhập lại Mật khẩu mới</label>
+                <input type="password" name="password3"/>
+                <div>
+                <input type="submit" value="Đổi mật khẩu"/>
+            </div>
+            {{message}}
+            
+           
+        </form>
+        </div>
+    </section>
