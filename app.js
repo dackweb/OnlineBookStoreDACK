@@ -10,11 +10,8 @@ var passport = require('passport');
 var flash = require('connect-flash');
 require('./models/passport')(passport);
 //const mysql = require('mysql');
-var indexController = require('./routes/home');
-var shopController = require('./routes/shop');
-var authorController = require('./routes/author');
-var singleProductController = require('./routes/single-product');
-//var productController = require('./routes/product');
+
+
 
 
 
@@ -35,11 +32,8 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-require('./routes/users')(app,passport);
-app.use('/', indexController);
-app.use('/shop',shopController);
-app.use('/author',authorController);
-app.use('/single-product',singleProductController);
+var index = require('./routes/index');
+app.use('/',index);
 /*const con = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
