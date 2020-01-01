@@ -6,9 +6,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars');
 var app = express();
+var Handlebars = require('handlebars');
 var passport = require('passport');
 var flash = require('connect-flash');
 require('./models/passport')(passport);
+
 //const mysql = require('mysql');
 
 
@@ -20,6 +22,9 @@ require('custom-env').env()
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('hbs',hbs({extname:'hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layouts/'}));
+var paginate = require('handlebars-paginate');
+ 
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,6 +38,14 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 var index = require('./routes/index');
+Handlebars.registerHelper('paginate', paginate);
+app.use(function(req,res,next){
+ res.locals.reqe = req.query;
+ 
+  next();
+})
+
+
 app.use('/',index);
 /*const con = mysql.createConnection({
   host: process.env.DB_HOST,

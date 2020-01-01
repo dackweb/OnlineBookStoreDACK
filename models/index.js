@@ -46,10 +46,21 @@ module.exports.getType = async function (req,res)
     }
   }));
 }
+module.exports.getType2 = async function (type)
+{
+   
+  return await new Promise((resolve, reject) => con.query('SELECT * FROM product WHERE type ='+mysql.escape(type)+'LIMIT 4', (err, results) => {
+    if (err) {
+      reject(err)
+    } else {
+      resolve(results);
+    }
+  }));
+}
 module.exports.UpdateConfirmStatus = async function (req,res)
 {
   
-   con.query('UPDATE users SET confirmed = 1 WHERE username ='+mysql.escape(req.params.id));
+   con.query('UPDATE users SET confirmed = 1 WHERE email ='+mysql.escape(req.params.id));
 
 }
 module.exports.getID = async function (req,res)
@@ -91,7 +102,54 @@ module.exports.test =  async function (req,res)
   // Here we compute the LIMIT parameter for MySQL query
 
   var limit = skip + ',' + numPerPage;
+  console.log(limit);
  con.query('SELECT count(*) as numRows FROM product',function(err,results) {
+  if (err) {
+    reject(err);}
+    numRows = results[0].numRows;
+    numPages = Math.ceil(numRows / numPerPage);
+   
+    
+    console.log('pages:'+ page);
+    console.log('number of pages:'+ numPages);
+    console.log('npp is '+req.query.npp);
+    con.query('SELECT * FROM product ORDER BY ID LIMIT ' + limit,function(err,results) {
+      if (err) {
+        reject(err);}
+      var responsePayload = {
+        results: results,
+        sumPage: numPages
+      };
+     
+        responsePayload.pagination = {
+          current: page,
+          perPage: numPerPage,
+          previous: page > 0 ? page - 1 : undefined,
+          next: page < numPages - 1 ? page + 1 : undefined
+        }
+     
+      resolve(responsePayload);
+    })
+  })
+ 
+  
+})
+}
+module.exports.test2 =  async function (req,res)
+{
+  return await new Promise((resolve, reject) =>{
+   
+  var numRows;
+  
+  var numPerPage = 8;
+  var page = parseInt(req.query.page,10) || 1;
+  var numPages;
+  var skip = (page-1) * numPerPage;
+  // Here we compute the LIMIT parameter for MySQL query
+
+  var limit = skip + ',' + numPerPage;
+
+ con.query('SELECT count(*) as numRows FROM product WHERE ',function(err,results) {
   if (err) {
     reject(err);}
     numRows = results[0].numRows;
@@ -126,28 +184,28 @@ module.exports.test =  async function (req,res)
 module.exports.getCostQuery =  async function (req,res)
 {
   return await new Promise((resolve) =>{
-     if(req.query.test2 =="1")
+     if(req.query.price =="1")
     {
-      var sqlQuery = "SELECT * FROM product ";
+      var sqlQuery = "";
       resolve(sqlQuery);
     }
-    else if(req.query.test2 =="2"){
-    var sqlQuery = "SELECT * FROM product WHERE price < 50000";
+    else if(req.query.price =="2"){
+    var sqlQuery = "and price < 50000";
     resolve(sqlQuery);
     }
-    else if(req.query.test2 =="3")
+    else if(req.query.price =="3")
     {
-      var sqlQuery = "SELECT * FROM product WHERE price >= 50000 and price <100000";
+      var sqlQuery = "and price >= 50000 and price <100000";
       resolve(sqlQuery);
     }
-    else if(req.query.test2 =="4")
+    else if(req.query.price =="4")
     {
-      var sqlQuery = "SELECT * FROM product WHERE price >= 100000 and price 200000";
+      var sqlQuery = "and price >= 100000 and price 200000";
       resolve(sqlQuery);
     }
     else 
     {
-      var sqlQuery = "SELECT * FROM product WHERE price >= 200000";
+      var sqlQuery = "and WHERE price >= 200000";
       resolve(sqlQuery);
     }
   });
@@ -156,53 +214,98 @@ module.exports.getCostQuery =  async function (req,res)
 module.exports.getTypeQuery =  async function (req,res)
 {
   return await new Promise((resolve,reject) =>{
-     if(req.query.test =="1")
+     if(req.query.type =="1")
      {
-      var sqlQuery = "SELECT * FROM product ";
+      var sqlQuery = "";
       resolve(sqlQuery);
     }
     
     else 
-    {var sqlQuery ='SELECT * FROM product WHERE type = '+mysql.escape(req.query.test);
+    {var sqlQuery ='and type = '+mysql.escape(req.query.type);
     resolve(sqlQuery);
   }
 });
  
 }
-module.exports.getAuthorQuery = async  function (req,res)
-{
-  return await new Promise((resolve,reject) =>{
-      if(req.query.author != undefined)
-      {
-       var sqlQuery = "SELECT * FROM product WHERE author like '%"+req.query.author+"%'";
-        
-        resolve(sqlQuery);
-      }
-      else
-      {
-        var sqlQuery = "SELECT * FROM product ";
-        resolve(sqlQuery);
-      }
 
-    });  
-    
-}
 module.exports.filter = async function(req,res)
 {
   return await new Promise(async (resolve,reject) =>{
-  var res1 = await this.getAuthorQuery(req,res);
+    var numRows;
   
-  var res2 = await this.getTypeQuery(req,res);
-  var res3 =await  this.getCostQuery(req,res);
-  console.log(res1+' INTERSECT '+res2+' INTERSECT '+res3);
-  con.query(res1+' INTERSECT '+res2+' INTERSECT '+res3,(err, results) => {
+  var numPerPage = 2;
+  var page = parseInt(req.query.page,10) || 1;
+  var numPages;
+  var skip = (page-1) * numPerPage;
+  var limit = skip + ',' + numPerPage;
+  var typeQuery = await this.getTypeQuery(req,res);
+  var priceQuery = await this.getCostQuery(req,res);
+  //var sql = "SELECT count(*) as numRows FROM product where author like '%"+req.query.author+"%' "+typeQuery+priceQuery;
+  
+  con.query("SELECT count(*) as numRows FROM product where author like '%"+req.query.author+"%' "+typeQuery+priceQuery,function(err,results) {
     if (err) {
-      reject(err);
-    } else {
-      resolve(results);
-    }
-    
+      reject(err);}
+      numRows = results[0].numRows;
+      numPages = Math.ceil(numRows / numPerPage);
+      console.log('limit is'+limit);
+  con.query("SELECT * FROM product where author like '%"+req.query.author+"%' "+typeQuery+priceQuery+" ORDER BY ID LIMIT "+limit,(err, results) => {
+    if (err) {
+      reject(err);}
+     
+    var responsePayload = {
+      results: results,
+      sumPage: numPages
+    };
+   
+      responsePayload.pagination = {
+        current: page,
+        perPage: numPerPage,
+        previous: page > 0 ? page - 1 : undefined,
+        next: page < numPages - 1 ? page + 1 : undefined
+      }
+   console.log(responsePayload.results);
+    resolve(responsePayload);
+  });
   })
 
 });
 }
+/*module.exports.addOrder= async function(req,res)
+{
+  return await new Promise(async (resolve,reject) =>{
+    
+  
+    con.query('SELECT * FROM cart WHERE id = '+mysql.escape(req.params.id),  function(err,result)
+    {
+      if(err)
+      reject(err);
+      if(result[0]==undefined)
+      {
+        con.query('SELECT * FROM product WHERE id = '+mysql.escape(req.params.id), function(err,result)
+          {
+            if(err)
+              reject(err);
+     
+        var InsertQuery = "INSERT INTO cart(id,number,price,type) values (?,?,?,?)";
+        con.query(InsertQuery,[result[0].id,1,result[0].price,result[0].type],function(err,results)
+          {
+            if(err)
+              reject(err);
+            resolve(results);
+          });
+
+
+        })
+        }
+        else{
+          con.query("update cart set number = ? WHERE id = ?",[result[0].number+1,result[0].id],function(err,results)
+          {
+            if(err)
+              reject(err);
+            resolve(results);
+          });
+            }
+})
+})
+  
+}*/

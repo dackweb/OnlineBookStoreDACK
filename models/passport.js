@@ -107,10 +107,11 @@ var nodemailer = require('nodemailer');
                  {
                      username:username,
                      password:hash,
+                     email:req.body.email,
                      flag:false
                     
                  };
-                 emailToken = username;
+                 emailToken = req.body.email;
                  const url = `http://localhost:3000/confirmation/${emailToken}`;
                  var transporter = nodemailer.createTransport({
                     service: 'gmail',
@@ -119,7 +120,7 @@ var nodemailer = require('nodemailer');
                       pass: 'kyonaruto'
                     }
                   });
-               transporter.sendMail({from:'kaitouthuan@gmail.com',to:username,subject:'confirm email',html: `Please click this email to confirm your email: <a href="${url}">${url}</a>`,
+               transporter.sendMail({from:'kaitouthuan@gmail.com',to:req.body.email,subject:'confirm email',html: `Please click this email to confirm your email: <a href="${url}">${url}</a>`,
                function(error, info){
                 if (error) {
                   console.log(error);
@@ -127,8 +128,8 @@ var nodemailer = require('nodemailer');
                   console.log('Email sent: ' + info.response);
                 }
               }})
-                    var InsertQuery = "INSERT INTO users(username,password) values (?,?)"; 
-                    con.query(InsertQuery,[newUser.username,newUser.password],
+                    var InsertQuery = "INSERT INTO users(username,password,email,isAdmin) values (?,?,?,?)"; 
+                    con.query(InsertQuery,[newUser.username,newUser.password,newUser.email,0],
                      function(err,rows){
                         if(err)
                         return done(err);

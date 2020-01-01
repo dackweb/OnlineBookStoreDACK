@@ -1,13 +1,25 @@
 
 var express = require('express');
+var Handlebars = require('handlebars');
 var con = require('../models/index')
 var router = express.Router();
 
-router.get('/', async function(req, res,) {
+Handlebars.registerHelper('filter', function(res) {
  
-  var result = await con.test(req,res);
-  res.render('type', { results:result.results});
-  //res.render('testSelect');
+  return 'search?author='+res.author+ '&type='+res.type+'&price='+res.price+'&value=1';
+ });
+
+router.get('/', async function(req, res) {
+  
+  
+  console.log('begin');
+  var result = await con.filter(req,res);
+
+  res.render('shop', {x:req.query, results: result.results,author:req.query.author,type: req.query.type,price:req.query.price,pagination:{
+    page:result.pagination.current,
+    pageCount:result.sumPage,
+    
+  }})
    
   });
   module.exports = router;

@@ -1,0 +1,36 @@
+<section class="product-sec">
+        <div class="container">
+           
+            <div class="row">
+                 {{#each result}}
+                <div class="col-md-5 ">
+                    <img src ="{{this.img}}"alt ="picture"height="40" width="40">
+                </div>
+                
+                    <!--/main slider carousel-->
+                
+                <div class="col-md-6 ">
+                 
+                   
+                        <li>
+                            <span class="name">Tên: {{this.name}}</span>
+                            <p>Giá {{this.price}}</p>
+                            <p>Số lượng{{this.number}}</p>
+                           
+
+                        </li>
+                      
+                    
+                    
+                   
+                </div>
+                 {{/each}}
+            </div>
+            <div class = "row">
+                 <div class="col-md-9 "></div>
+                <div class="col-md-3 ">
+                     <button class="btn myButton"href = "/buy">Xác nhận thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </section>
