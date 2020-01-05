@@ -58,14 +58,14 @@
                         <li class="active has-sub">
                             <a class="js-arrow" href="/">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
                             </a>
+
+                            <a href="/adduser"> Thêm tài khoản</a>
+
                         </li>
-                           
-                      </ul>
-                        </li>
+
+                    </ul>
+                    </li>
                     </ul>
                 </nav>
             </div>
@@ -89,7 +89,8 @@
                                     <i class="zmdi zmdi-search"></i>
                                     <div class="search-dropdown js-dropdown">
                                         <form action="">
-                                            <input class="au-input au-input--full au-input--h65" type="text" placeholder="Search for datas &amp; reports..." />
+                                            <input class="au-input au-input--full au-input--h65" type="text"
+                                                placeholder="Search for datas &amp; reports..." />
                                             <span class="search-dropdown__icon">
                                                 <i class="zmdi zmdi-search"></i>
                                             </span>
@@ -124,24 +125,7 @@
                                         <i class="fas fa-angle-down"></i>
                                     </span>
                                 </a>
-                                <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                    <li>
-                                        <a href="index.html">
-                                            <i class="fas fa-tachometer-alt"></i>Dashboard 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="index2.html">
-                                            <i class="fas fa-tachometer-alt"></i>Dashboard 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="index3.html">
-                                            <i class="fas fa-tachometer-alt"></i>Dashboard 3</a>
-                                    </li>
-                                    <li>
-                                        <a href="index4.html">
-                                            <i class="fas fa-tachometer-alt"></i>Dashboard 4</a>
-                                    </li>
-                                </ul>
+
                             </li>
                             <li>
                                 <a href="inbox.html">
@@ -294,7 +278,8 @@
                         <div class="row">
                             <div class="col-md-6 col-lg-3">
                                 <div class="statistic__item">
-                                    <h2 class="number">10,368</h2>
+                                    <%count.forEach(function(rows){%>
+                                    <h2 class="number"><%=rows.SoLuong%></h2><%})%>
                                     <span class="desc">User</span>
                                     <div class="icon">
                                         <i class="zmdi zmdi-account-o"></i>
@@ -343,7 +328,7 @@
                                 <div class="recent-report2">
                                     <h3 class="title-3">Thống kê theo từng tháng</h3>
                                     <div class="chart-info">
-                                        <div class="chart-info__left"> 
+                                        <div class="chart-info__left">
                                         </div>
                                         <div class="chart-info-right">
                                             <div class="rs-select2--dark rs-select2--sm">
@@ -373,7 +358,8 @@
                                         <div class="au-progress">
                                             <span class="au-progress__title">Sản phẩm 1</span>
                                             <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="90">
+                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar"
+                                                    data-transitiongoal="90">
                                                     <span class="au-progress__value js-value"></span>
                                                 </div>
                                             </div>
@@ -381,7 +367,8 @@
                                         <div class="au-progress">
                                             <span class="au-progress__title">Sản phẩm 2</span>
                                             <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="85">
+                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar"
+                                                    data-transitiongoal="85">
                                                     <span class="au-progress__value js-value"></span>
                                                 </div>
                                             </div>
@@ -389,7 +376,8 @@
                                         <div class="au-progress">
                                             <span class="au-progress__title">Sản phẩm 3</span>
                                             <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="85">
+                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar"
+                                                    data-transitiongoal="85">
                                                     <span class="au-progress__value js-value"></span>
                                                 </div>
                                             </div>
@@ -397,7 +385,8 @@
                                         <div class="au-progress">
                                             <span class="au-progress__title">Sản phẩm 4</span>
                                             <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="70">
+                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar"
+                                                    data-transitiongoal="70">
                                                     <span class="au-progress__value js-value"></span>
                                                 </div>
                                             </div>
@@ -406,288 +395,97 @@
                                         <div class="au-progress">
                                             <span class="au-progress__title">Sản phẩm 5</span>
                                             <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="70">
+                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar"
+                                                    data-transitiongoal="70">
                                                     <span class="au-progress__value js-value"></span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="au-progress">
-                                            <span class="au-progress__title">Sản phẩm 6</span>
-                                            <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="70">
-                                                    <span class="au-progress__value js-value"></span>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="au-progress">
-                                            <span class="au-progress__title">Sản phẩm 7</span>
-                                            <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="60">
-                                                    <span class="au-progress__value js-value"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="au-progress">
-                                            <span class="au-progress__title">Sản phẩm 8</span>
-                                            <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="55">
-                                                    <span class="au-progress__value js-value"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="au-progress">
-                                            <span class="au-progress__title">Sản phẩm 9</span>
-                                            <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="50">
-                                                    <span class="au-progress__value js-value"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="au-progress">
-                                            <span class="au-progress__title">Sản phẩm 10</span>
-                                            <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="50">
-                                                    <span class="au-progress__value js-value"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                        <!-- END TASK PROGRESS-->
                                     </div>
                                 </div>
-                                <!-- END TASK PROGRESS-->
                             </div>
                         </div>
-                    </div>
-                </div>
             </section>
 
             <section>
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-xl-6">
+                            <div class="col-xl-12">
                                 <!-- USER DATA-->
                                 <div class="user-data m-b-40">
                                     <h3 class="title-3 m-b-30">
                                         <i class="zmdi zmdi-account-calendar"></i>Danh sách tài khoản</h3>
-                                    
                                     <div class="table-responsive table-data">
                                         <table class="table">
                                             <thead>
                                                 <tr>
+                                                    <td>Id</td>
+
                                                     <td>
-                                                        <label class="au-checkbox">
-                                                            <input type="checkbox">
-                                                            <span class="au-checkmark"></span>
-                                                        </label>
+                                                        <div class="table-data__info">
+                                                            Tên đăng nhập
+                                                        </div>
+                                                        <span>
+                                                            Mật khẩu
+                                                        </span>
+
                                                     </td>
-                                                    <td>Tên tài khoản</td>
+
                                                     <td>Quyền</td>
+
+                                                    <td>Xóa</td>
+
+                                                    <td>Sửa</td>
+
+                                                    <td>Khóa</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
+
+                                                <%results.forEach(function(rows){%>
                                                 <tr>
-                                                    <td>
-                                                        <label class="au-checkbox">
-                                                            <input type="checkbox">
-                                                            <span class="au-checkmark"></span>
-                                                        </label>
-                                                    </td>
+
                                                     <td>
                                                         <div class="table-data__info">
-                                                            <h6>lori lynch</h6>
+                                                            <h6><%=rows.id%></h6>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="table-data__info">
+                                                            <h6><%=rows.username%></h6>
                                                             <span>
-                                                                <a href="#">johndoe@gmail.com</a>
+                                                                <%=rows.password%>
                                                             </span>
                                                         </div>
                                                     </td>
+
+
+
                                                     <td>
-                                                        <span class="role admin">admin</span>
+                                                        <span class="role admin"><%=((rows.isAdmin == 1)?"Admin":"User")%></span>
                                                     </td>
                                                     <td>
-                                                        <div class="rs-select2--trans rs-select2--sm">
-                                                            <select name="property">
-                                                                <option></option>
-                                                                <option value="">Chỉnh sửa</option>
-                                                                <option value="">Xóa</option>
-                                                            </select>
-                                                            <div class="dropDownSelect2"></div>
-                                                        </div>
+                                                        <a href="/delete/<%=rows.id%>">Xóa</a>
                                                     </td>
                                                     <td>
-                                                        <span class="more">
-                                                            <i class="zmdi zmdi-more"></i>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label class="au-checkbox">
-                                                            <input type="checkbox" checked="checked">
-                                                            <span class="au-checkmark"></span>
-                                                        </label>
+                                                        <a href="/update/<%=rows.id%>">Sửa</a>
                                                     </td>
                                                     <td>
-                                                        <div class="table-data__info">
-                                                            <h6>lori lynch</h6>
-                                                            <span>
-                                                                <a href="#">johndoe@gmail.com</a>
-                                                            </span>
-                                                        </div>
+                                                        <%ref = (rows.isLocked==0)?"lock":"unlock"%>
+                                                       
+                                                        <a href ="/<%=ref%>/<%=rows.id%>"><%=((rows.isLocked == 1)?"Mở khóa":"Khóa")%></a>
                                                     </td>
-                                                    <td>
-                                                        <span class="role user">user</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="rs-select2--trans rs-select2--sm">
-                                                            <select name="property">
-                                                                <option></option>
-                                                                <option value="">Chỉnh sửa</option>
-                                                                <option value="">Xóa</option>
-                                                            </select>
-                                                            <div class="dropDownSelect2"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="more">
-                                                            <i class="zmdi zmdi-more"></i>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label class="au-checkbox">
-                                                            <input type="checkbox">
-                                                            <span class="au-checkmark"></span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <div class="table-data__info">
-                                                            <h6>lori lynch</h6>
-                                                            <span>
-                                                                <a href="#">johndoe@gmail.com</a>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="role user">user</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="rs-select2--trans rs-select2--sm">
-                                                            <select name="property">
-                                                                <option></option>
-                                                                <option value="">Chỉnh sửa</option>
-                                                                <option value="">Xóa</option>
-                                                            </select>
-                                                            <div class="dropDownSelect2"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="more">
-                                                            <i class="zmdi zmdi-more"></i>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label class="au-checkbox">
-                                                            <input type="checkbox">
-                                                            <span class="au-checkmark"></span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <div class="table-data__info">
-                                                            <h6>lori lynch</h6>
-                                                            <span>
-                                                                <a href="#">johndoe@gmail.com</a>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="role member">member</span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="rs-select2--trans rs-select2--sm">
-                                                            <select name="property">
-                                                                <option></option>
-                                                                <option value="">Chỉnh sửa</option>
-                                                                <option value="">Xóa</option>
-                                                            </select>
-                                                            <div class="dropDownSelect2"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="more">
-                                                            <i class="zmdi zmdi-more"></i>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="user-data__footer">
-                                        <button class="au-btn au-btn-load">Xem thêm</button>
+
+                                                </tr><%})%>
+
                                     </div>
                                 </div>
-                                <!-- END USER DATA-->
                             </div>
-                            <div class="col-xl-6">
-                                <!-- MAP DATA-->
-                                <div class="map-data m-b-40">
-                                    <h3 class="title-3 m-b-30">
-                                        <i class="zmdi zmdi-map"></i>Doanh thu theo quốc gia</h3>
-                                    <div class="map-wrap m-t-45 m-b-80">
-                                        <div id="vmap" style="height: 284px;"></div>
-                                    </div>
-                                    <div class="table-wrap">
-                                        <div class="table-responsive table-style1">
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Mỹ</td>
-                                                        <td>$119,366.96</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Úc</td>
-                                                        <td>$70,261.65</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Anh</td>
-                                                        <td>$46,399.22</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="table-responsive table-style1">
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Đức</td>
-                                                        <td>$20,366.96</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Pháp</td>
-                                                        <td>$10,366.96</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Nga</td>
-                                                        <td>$5,366.96</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END MAP DATA-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </section>
 
             <section>
@@ -695,7 +493,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="copyright">
-                                <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                                <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a
+                                        href="https://colorlib.com">Colorlib</a>.</p>
                             </div>
                         </div>
                     </div>

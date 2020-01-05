@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <section>
+        <form action="/update/<%=id%>" method="POST">
+            <table>
+                <caption> Cập nhật tài khoản</caption>
+                <tbody>
+                    <%results.forEach(function(rows){%>
+                    <tr>
+                        <td>Username</td>
+                        <td><input type="text" name="username" value="<%=rows.username%>"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Mật khẩu</td>
+                        <td><input type="password" name="password" value="<%=rows.password%>"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Quyền</td>
+                        <td>
+                            <select name="quyen">
+                                <option value="true">Admin</option>
+                                <option value="false">User</option>
+                            </select>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td colspan="2"><input type="submit" name="submit" value="Cập nhật tài khoản">
+                    </tr><%})%>
+
+            </table>
+        </form>
+    </section>
+</body>
+
+
+</html>
