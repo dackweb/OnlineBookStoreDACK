@@ -103,7 +103,7 @@ module.exports.seeCart= function(req,res)
 }
 module.exports.asyncTransfer=async function(key)
 {
-  var res=[];
+  
   return await new Promise(async (resolve,reject) =>{
   con.query('SELECT * FROM product WHERE id = '+mysql.escape(key),  function(err,result)
   {
@@ -112,24 +112,63 @@ module.exports.asyncTransfer=async function(key)
     
    
    
-      var InsertQuery = "INSERT INTO cart(id,number,price,type) values (?,?,?,?)";
-      con.query(InsertQuery,[result[0].id,localStorage.getItem(key),result[0].price,result[0].type],function(err,results)
+      var InsertQuery = "INSERT INTO cart(id,number,price,type,img) values (?,?,?,?,?)";
+      con.query(InsertQuery,[result[0].id,localStorage.getItem(key),result[0].price,result[0].type,result[0].img],function(err,results)
         {
           if(err)
             reject(err);
           localStorage.removeItem(key);
           console.log('key is '+key);
-          res.push(key);
+          
         });
 
-        
+        resolve(result);
       })
-      resolve(res);
+      
     });
 }
-module.exports.addOrder= async function(req,res)
+module.exports.addOrder= async function()
 {
-  return await new Promise(async (resolve) =>{
+  return await new Promise(async (resolve,reject) =>{
+    var promises= [];
+    for (var i = 0; i < localStorage.length; i++) {
+      
+      
+      var key = localStorage.key(i);
+      console.log(key);
+      promises.push(
+      this.asyncTransfer(key));
+    
+  
+}
+Promise.all(promises)
+.then((result) => {
+  resolve(result);
+})
+.catch((e) => {
+    // Handle errors here
+    reject(e);
+  });
+});
+ 
+
+ 
+}
+module.exports.transferOrder= async function(req,res)
+{
+  console.log('well');
+  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM cart ', (err, results) => {
+    if (err) {
+      reject(err)
+    } else {
+      console.log(results);
+      resolve(results);
+    }
+  })});
+}
+/*module.exports.addOrder= async function(req,res)
+{
+  return await new Promise(async (reject,resolve) =>{
     
     for (var i = 0; i < localStorage.length;i++) {
       
@@ -137,8 +176,14 @@ module.exports.addOrder= async function(req,res)
       var key = localStorage.key(i);
       await this.asyncTransfer(key);
     }
-   resolve(res); 
+    con.query('SELECT * FROM product WHERE userID = '+req.user.id,function(err,res)
+    {
+      if(err)
+        reject(err);
+      resolve(res); 
+    })
+  
   }
 })
   
-}
+}*/

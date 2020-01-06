@@ -278,7 +278,9 @@ module.exports.addCMT =async  function(req,res)
         reject(err);
      
       
-      con.query('INSERT into cmt(userID,productID,username,content,img) value(?,?,?,?,?)',[user[0].id,req.body.cmtid,user[0].username,req.body.cmt,user[0].img],function(err,result)
+
+      con.query('INSERT into cmt(userID,productID,username,content,img) value(?,?,?,?,?)',
+      [user[0].id,req.body.cmtid,user[0].username,req.body.cmt,user[0].img],function(err,result)
         {
           if(err)
             reject(err);
@@ -299,42 +301,49 @@ module.exports.getAllCmt = async function (id)
     }
   }));
 }
-/*module.exports.addOrder= async function(req,res)
+module.exports.getCmtPagination =  async function (req,res)
 {
-  return await new Promise(async (resolve,reject) =>{
+  return await new Promise((resolve, reject) =>{
+   
+  var numRows;
+  
+  var numPerPage = 4;
+  var page = parseInt(req.query.page,10) || 1;
+  var numPages;
+  var skip = (page-1) * numPerPage;
+  // Here we compute the LIMIT parameter for MySQL query
+
+  var limit = skip + ',' + numPerPage;
+  console.log(limit);
+ con.query('SELECT count(*) as numRows FROM cmt where ID = '+mysql.escape(req.params.id),function(err,results) {
+  if (err) {
+    reject(err);}
+    numRows = results[0].numRows;
+    numPages = Math.ceil(numRows / numPerPage);
+   
     
-  
-    con.query('SELECT * FROM cart WHERE id = '+mysql.escape(req.params.id),  function(err,result)
-    {
-      if(err)
-      reject(err);
-      if(result[0]==undefined)
-      {
-        con.query('SELECT * FROM product WHERE id = '+mysql.escape(req.params.id), function(err,result)
-          {
-            if(err)
-              reject(err);
+    console.log('pages:'+ page);
+    console.log('number of pages:'+ numPages);
+    console.log('npp is '+req.query.npp);
+    con.query('SELECT * FROM product ORDER BY date LIMIT ' + limit,function(err,results) {
+      if (err) {
+        reject(err);}
+      var responsePayload = {
+        results: results,
+        sumPage: numPages
+      };
      
-        var InsertQuery = "INSERT INTO cart(id,number,price,type) values (?,?,?,?)";
-        con.query(InsertQuery,[result[0].id,1,result[0].price,result[0].type],function(err,results)
-          {
-            if(err)
-              reject(err);
-            resolve(results);
-          });
-
-
-        })
+        responsePayload.pagination = {
+          current: page,
+          perPage: numPerPage,
+          previous: page > 0 ? page - 1 : undefined,
+          next: page < numPages - 1 ? page + 1 : undefined
         }
-        else{
-          con.query("update cart set number = ? WHERE id = ?",[result[0].number+1,result[0].id],function(err,results)
-          {
-            if(err)
-              reject(err);
-            resolve(results);
-          });
-            }
-})
-})
+     
+      resolve(responsePayload);
+    })
+  })
+ 
   
-}*/
+})
+}

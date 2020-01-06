@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* GET users listing. */
 
-router.get('cart/:id',  async function (req, res) {
+router.get('/cart/:id',  async function (req, res) {
   
 //await db.addOrder(req,res);
 
@@ -39,7 +39,7 @@ router.post('/user/cmt',  async function (req, res) {
   {
   
       db.addCMT(req,res);
-      res.render('single-product'+req.body.cmtid);
+     // res.render('single-product'+req.body.cmtid);
       
       //res.redirect('back');
       

@@ -83,10 +83,34 @@ const cmt = $('input[name="thêm bình luận"]').val();
     console.log('fail');
 })
 .always(function(){
-    $('#body').load('/single-product/'+id);
+  
     console.log('xxx');
 })
 })
+$("input[name='demo3']").TouchSpin(function()
+{
+    initval: $(number).attr('value');
+    const id = $(this).val();
+    console.log(id);
+    
+    
+    $.get('/add/cart/'+id,function() {
+        alert( 'success' );
+      })
+       
+       .done(function(res) {
+           console.log('hi minna');
+            if (res.success) {
+            console.log('id from ajax call is', res);
+           
+
+           
+        } else {
+            console.log('error...ajax');
+           
+            }
+})
+});
 /*function addCmt(productId,userId)
 {
 if(userId ==undefined)
