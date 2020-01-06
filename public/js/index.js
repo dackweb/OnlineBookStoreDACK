@@ -36,16 +36,20 @@ $(document).ready(function() {
     console.log(id);
     
     
-    $.get('/addCart/'+id,function() {
+    $.get('/add/cart/'+id,function() {
         alert( 'success' );
       })
        
        .done(function(res) {
+           console.log('hi minna');
             if (res.success) {
             console.log('id from ajax call is', res);
            
+
+           
         } else {
             console.log('error...ajax');
+           
             }
 })
     
@@ -53,26 +57,35 @@ $(document).ready(function() {
 $( "#addCMT" ).submit(function(e)
 {
    e.preventDefault();
-// const id = #userid.attr('cmtid');
- console.log('asdf');
+ const id = $(cmtid).attr('value');
+
  //console.log( $(#.val());
- console.log(id);
- const user = $(this).attr('userid');
- console.log(user);
- /*$.get('/addCart/'+id,function() {
-     alert( 'success' );
-   })
+ 
+ const user = $(userid).attr('value');
+
+const cmt = $('input[name="thêm bình luận"]').val();
+
+ $.ajax({
+    url: '/add/user/cmt' ,
+    method: 'POST',
+    data: { cmtid: id,userid:user,cmt:cmt }
+   
+   
     
-    .done(function(res) {
-         if (res.success) {
-         console.log('id from ajax call is', res);
+    }).done(function(res) {
+        console.log('nono');
+        $('#body').load('/single-product/'+id);
         
-     } else {
-         console.log('error...ajax');
-         }
-         
+      
+       
 })
- */
+.fail(function() {
+    console.log('fail');
+})
+.always(function(){
+    $('#body').load('/single-product/'+id);
+    console.log('xxx');
+})
 })
 /*function addCmt(productId,userId)
 {

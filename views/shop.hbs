@@ -16,7 +16,7 @@
                             <h3>{{this.name}}</h3>
                             <h6><span class="price">{{this.price}}</span> / <a href="#">Buy Now</a></h6>
                             <div class="hover">
-                                <a href="single-product/{{this.id}}">
+                                <a href="/single-product/{{this.id}}">
                             <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
                             </a>
                             </div>
@@ -28,19 +28,18 @@
             <h2>recently added books to our store</h2>
             <a href="/search?author={{author}}&type={{type}}&price={{price}}&value=1&page={{n}}">Prev</a></li>
               <nav aria-label="Page navigation example">
-  <ul class="pagination pagination-centered">
-   
-    {{#paginate pagination type="previous"}}
-      <li {{#if disabled}}class=" disabled"{{/if}}><a class="page-link"href="{{filter ../x}}&page={{n}}">Prev</a></li>
-    {{/paginate}}
-    {{#paginate pagination type="middle" limit="3"}}
-      <li {{#if active}}class="active"{{/if}}><a class="page-link"href="{{filter ../x}}&page={{n}}">{{n}}</a></li>
-    {{/paginate}}
-    {{#paginate pagination type="next"}}
-      <li {{#if disabled}}class="disabled"{{/if}}><a class="page-link"href="{{filter ../x}}&page={{n}}">Next</a></li>
-    {{/paginate}}
-    
-  </ul>
+  
+   <nav aria-label="Page navigation example">
+              <div class="text-center">
+                <ul class="pagination" >
+                    <li><a class="page-link"href="page?page=1">1</a></li>
+                    <li><a class="page-link"href="page?page=2">2</a></li>
+                    <li><a class="page-link"href="page?page=3">3</a></li>
+                    <li><a class="page-link"href="page?page=4">4</a></li>
+     
+                </ul>
+            </div>
+        </nav>
   </nav>
 
        

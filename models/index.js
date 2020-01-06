@@ -270,6 +270,35 @@ module.exports.filter = async function(req,res)
 
 });
 }
+module.exports.addCMT =async  function(req,res)
+{
+  return await new Promise(async (resolve,reject) =>{
+    con.query('SELECT * FROM users WHERE id ='+req.body.userid,function(err,user){ 
+      if(err)
+        reject(err);
+     
+      
+      con.query('INSERT into cmt(userID,productID,username,content,img) value(?,?,?,?,?)',[user[0].id,req.body.cmtid,user[0].username,req.body.cmt,user[0].img],function(err,result)
+        {
+          if(err)
+            reject(err);
+          resolve(result);
+
+        })
+      })
+    })
+}
+module.exports.getAllCmt = async function (id)
+{
+   
+  return await new Promise((resolve, reject) => con.query('SELECT * FROM cmt WHERE productID = '+mysql.escape(id)+'ORDER BY date DESC', (err, results) => {
+    if (err) {
+      reject(err)
+    } else {
+      resolve(results);
+    }
+  }));
+}
 /*module.exports.addOrder= async function(req,res)
 {
   return await new Promise(async (resolve,reject) =>{

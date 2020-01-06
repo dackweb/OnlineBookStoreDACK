@@ -41,9 +41,7 @@ router.get('/searchName',async function(req, res) {
 router.get('/faq', function(req, res) {
   res.render('faq', { title: 'Express',isAuthenticate:req.isAuthenticated() });
 });
-router.get('/add', function(req, res) {
-  res.send(req.params.id);
-});
+
 router.get('/filter', function(req, res) {
   res.render('filter', { title: 'Express',isAuthenticate:req.isAuthenticated() });
 });
@@ -52,9 +50,15 @@ router.get('/about', function(req, res) {
  
 });
 router.get('/single-product/:id',  async function (req, res) {
-
+console.log('bla bla bla');
   var result = await con.getID(req,res);
-          
-          res.render('single-product', {userid:req.user.id,cmtid:req.params.id,result:result,results:await con.getType2(result[0].type) });
+  var cmtResult = await con.getAllCmt(req.params.id);
+  //console.log(req.params.id+' '+userid)
+  var userid = '';
+          if(req.user!=undefined)
+            userid = req.user.id;
+          res.render('single-product', {userid:userid,cmtid:req.params.id,
+            result:result,results:await con.getType2(result[0].type),
+            isAuthenticate:req.isAuthenticated(),cmt:cmtResult });
   });
 module.exports = router;

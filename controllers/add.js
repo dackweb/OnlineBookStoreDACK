@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* GET users listing. */
 
-router.get('/:id',  async function (req, res) {
+router.get('cart/:id',  async function (req, res) {
   
 //await db.addOrder(req,res);
 
@@ -19,18 +19,31 @@ router.get('/:id',  async function (req, res) {
 
        
 });
-router.post('/user/comment',  async function (req, res) {
+router.get('/getCMT/:id',async function(req,res)
+{
+var result = await db.getAllCmt(req.params.id);
+  return res.json({res:result});
+})
+
+router.post('/user/cmt',  async function (req, res) {
   
   //await db.addOrder(req,res);
-  if(!req.isAuthenticated()){
-     
+
+
+  if(req.body.userid==''){
+   
      res.render('login');
      //res.redirect('back');
   }
   else
   {
+  
+      db.addCMT(req,res);
+      res.render('single-product'+req.body.cmtid);
       
-      await local.addOrder(req,res);
+      //res.redirect('back');
+      
+     
   }
   
          

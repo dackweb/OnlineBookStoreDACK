@@ -15,9 +15,9 @@ router.use('/', indexController);
 router.use('/shop', shopController);
 router.use('/search',filterController);
 
-//router.use('/author',authorController);
+router.use('/page',shopController);
 //router.use('/search',searchController);
 //router.use('/single-product',singleProductController);
-router.use('/addCart',addController);
+router.use('/add',addController);
 router.use('/buy',BuyController);
 module.exports = router;

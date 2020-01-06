@@ -20,4 +20,5 @@ router.get('/author/:id',  async function (req, res) {
     res.render('type', { results:await db.getAuthor(req,res)});
            
     });
+    
 module.exports = router;
