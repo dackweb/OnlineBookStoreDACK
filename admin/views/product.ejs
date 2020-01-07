@@ -1,0 +1,61 @@
+<table>
+    <thead>
+        <tr>
+            <td>Ảnh</td>
+
+            <td>Tên</td>
+
+            <td>Giá</td>
+
+            <td>Tác giả</td>
+
+            <td>Mô tả</td>
+
+            <td>Thể loại</td>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        <%results.forEach(function(rows){%>
+        <tr>
+
+            <td>
+                
+                    <img src="<%=rows.img%>">
+                
+            </td>
+
+            <td>
+                
+                    <h6 ><%=rows.name%></h6>
+                
+            </td>
+
+            <td>
+                
+                    <h6><%=rows.price%></h6>
+                
+            </td>
+
+            <td>
+                
+                    <h6><%=rows.author%></h6>
+                
+            </td>
+
+            <td>
+                
+                    <h6><%=rows.description%></h6>
+                
+            </td>
+
+            <td>
+                
+                    <h6><%=rows.type%></h6>
+                
+            </td>
+
+        </tr><%})%>
+    </tbody>
+    </table>

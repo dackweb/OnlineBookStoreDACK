@@ -1,13 +1,16 @@
 var con  = require('../models/index.js');
 var express = require('express');
-var db = require('../models/db.js')
 
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', async function(req, res,) {
   
-  res.render('index',{ results:await con.getAllUser(req,res),count:await con.getNumberOfUser(req,res)});
+  res.render('index',{ results:await con.getAllUser(req,res),
+                       count:await con.getNumberOfUser(req,res),
+                       countProduct:await con.getNumberOfProduct(req,res),
+                       getTop10Product:await con.getTop10ofProduct(req,res),
+                       countTop10Product:await con.countTop10ofProduct(req,res)});
  
 });
 

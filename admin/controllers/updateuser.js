@@ -3,7 +3,6 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var jsosParser = bodyParser.json();
 var urlenuncodedParser = bodyParser.urlencoded({extended:false})
-var db = require('../models/db.js')
 
 var router = express.Router();
 

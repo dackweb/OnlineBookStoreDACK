@@ -100,3 +100,55 @@ module.exports.unlockUser = async(id)=>
   }));
    
 }
+
+module.exports.getAllProduct = async()=>
+{ 
+ 
+   return await new Promise((resolve, reject) => con.query('SELECT * FROM product', (err, results) => {
+    if (err) {
+      throw err
+    } else {
+      resolve(results);
+    }
+  }));
+   
+}
+
+module.exports.getNumberOfProduct = async()=>
+{ 
+ 
+   return await new Promise((resolve, reject) => con.query('SELECT COUNT(*) as SoLuong FROM product', (err, results) => {
+    if (err) {
+      throw err
+    } else {
+      resolve(results);
+    }
+  }));
+   
+}
+
+module.exports.getTop10ofProduct = async()=>
+{ 
+ 
+   return await new Promise((resolve, reject) => con.query('SELECT * from product ORDER by countBuys DESC limit 10', (err, results) => {
+    if (err) {
+      throw err
+    } else {
+      resolve(results);
+    }
+  }));
+   
+}
+
+module.exports.countTop10ofProduct = async()=>
+{ 
+ 
+   return await new Promise((resolve, reject) => con.query('select sum(countBuys) as Tong from product ORDER by countBuys DESC limit 10', (err, results) => {
+    if (err) {
+      throw err
+    } else {
+      resolve(results);
+    }
+  }));
+   
+}
