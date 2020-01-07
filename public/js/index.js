@@ -88,9 +88,9 @@ const cmt = $('input[name="thêm bình luận"]').val();
 })
 })
 
-$("input[name^='cartItem_']").TouchSpin(function()
+$("input[name^='cartItem_']").TouchSpin(
 {
-    min:1;
+    min:1,max:100
 });
 $("input[name^='cartItem_']").on('touchspin.on.stopspin',(function()
 {
@@ -113,6 +113,39 @@ $("input[name^='cartItem_']").on('touchspin.on.stopspin',(function()
           console.log('res is '+res);
          
             $('#totalMoney').html(" <p>Giá tổng cộng:"+res+"</p>");
+            
+          
+           
+    })
+    .fail(function() {
+        console.log('fail');
+    })
+    .always(function(){
+      
+        console.log('xxx');
+    })
+}));
+$("button[name^=removeButton_]").on('click',(function()
+{
+   
+    
+    const id = $(this).attr('id');
+    console.log('val is '+id);
+    
+    
+    $.ajax({
+        url: '/crud/remove/cart/'+id ,
+        method: 'GET',
+        data: {id : id },
+        
+       
+        
+        }).done(function(res) {
+
+            //console.log('nono')+res ;
+          console.log('res is '+res);
+         
+          $('#body').load('/cart');
             
           
            

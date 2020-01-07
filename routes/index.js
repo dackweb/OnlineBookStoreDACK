@@ -10,6 +10,7 @@ var addController = require('../controllers/add');
 var filterController = require('../controllers/searchpage');
 var BuyController = require('../controllers/buy');
 var cartController = require('../controllers/cart');
+var crudController = require('../controllers/crud');
 require('../controllers/users')(router,passport);
 
 router.use('/', indexController);
@@ -20,6 +21,7 @@ router.use('/page',shopController);
 //router.use('/search',searchController);
 //router.use('/single-product',singleProductController);
 router.use('/add',addController);
+router.use('/crud',crudController);
 router.use('/cart',cartController);
 router.use('/buy',BuyController);
 module.exports = router;

@@ -24,9 +24,9 @@
                 <div class="row">
                     <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
                     <div class="col-md-6">
-                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5></div>
+                        <h5>Miễn phí giao hàng với mọi đơn hàng hơn 200.000đ</h5></div>
                     <div class="col-md-3">
-                        <span class="ph-number">Call : 800 1234 5678</span>
+                        <span class="ph-number">Gọi : 800 1234 5678</span>
                     </div>
                 </div>
             </div>
@@ -41,23 +41,21 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <li class="navbar-item active">
-                                <a href="/" class="nav-link">Home</a>
+                                <a href="/" class="nav-link">Trang chủ</a>
                             </li>
                             <li class="navbar-item">
                                 <a href="/shop" class="nav-link">Shop</a>
                             </li>
                             <li class="navbar-item">
-                                <a href="/about" class="nav-link">About</a>
+                                <a href="/about" class="nav-link">Về</a>
                             </li>
                             <li class="navbar-item">
                                 <a href="/faq" class="nav-link">FAQ</a>
                             </li>
                             {{#if isAuthenticate}}
-                             <li class="navbar-item">
-                               chào {{user.username}}
-                            </li>
+                             >
                             <li class="navbar-item">
-                                <a href="/logout" class="nav-link">Logout</a>
+                                <a href="/logout" class="nav-link">Đăng xuất</a>
                             </li>
                             <li class="navbar-item">
                                 <a href="/change_password" class="nav-link">Đổi mật khẩu</a>
@@ -65,10 +63,10 @@
                            
                             {{else}}
                             <li class="navbar-item">
-                                <a href="/login" class="nav-link">Login</a>
+                                <a href="/login" class="nav-link">Đăng nhập</a>
                             </li>
                             <li class="navbar-item">
-                                <a href="/register" class="nav-link">register</a>
+                                <a href="/register" class="nav-link">Đăng ký</a>
                             </li>
                             
                            
@@ -85,7 +83,7 @@
                         </form>
                         <div class="cart my-2 my-lg-0">
                             <span>
-                              <a href="/filter" class="nav-link">advance</a>
+                              <a href="/filter" class="nav-link">Lọc</a>
                             <span class="badge">1</span>
                         </div>
                     </div>

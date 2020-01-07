@@ -134,7 +134,7 @@ module.exports.asyncTransferBuy=async function(orderID,result)
   return await new Promise(async (resolve,reject) =>{
 
    
-   console.log(result);
+   
       var InsertQuery = "INSERT INTO orderdetail(productID,number,price,img,orderID) values (?,?,?,?,?)";
       con.query(InsertQuery,[result.id,result.number,result.price,result.img,orderID],function(err,results)
         {
@@ -159,10 +159,13 @@ module.exports.TransferHistory=async function(req,res)
         {
           if(err)
             reject(err);
-            con.query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'mysql' AND TABLE_NAME = 'history'",function(err,res){
+            var stupidQuery = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'mysql' AND TABLE_NAME = 'history'"
+            console.log(stupidQuery)
+            con.query(stupidQuery,function(err,res){
               if(err)
               reject(err);
-                resolve(res);
+            
+                resolve(res[0].AUTO_INCREMENT-1);
             })
            
         });
@@ -285,6 +288,26 @@ module.exports.updateCart =async function(req,res)
     }
   })});
      
+}
+module.exports.removeCartItem=async function(req,res)
+{
+  
+  return await new Promise(async (resolve,reject) =>{
+
+   
+   
+     
+      con.query('DELETE FROM `cart` WHERE id = '+req.params.id ,function(err,results)
+        {
+          if(err)
+            reject(err);
+            resolve(results);
+        });
+
+        
+      })
+      
+   
 }
 /*module.exports.addOrder= async function(req,res)
 {

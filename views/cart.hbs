@@ -11,36 +11,48 @@
             
                 
                     {{#each results}}
-                    <div class="row-12">
-                    <div class="col-3">
-                        <div class="item">
-                            <img src="{{this.img}}" alt="img" height="100" width="100">
-                            <h3>{{this.name}}</h3>
-                            <h6><span class="price">Giá: {{this.price}}</span></h6>
-                             <div class="col-8">
-                            <h4 >Số lượng </h4>
-                             
-                           
-                            <input class ="bootstrap-touchspin" id="{{this.id}}" type="text" value="{{this.number}}" name="cartItem_{{this.id}}">
-                              </div>
-
-                              </div>
+                  
+                        <div class="row">
+                            <div class="col-sm-3">
+                        
+                                <img src="{{this.img}}" alt="img" height="100" width="100">
+                                <h3>{{this.name}}</h3>
+                                <p><span class="price">Giá: {{this.price}}</span></p>
+                        
+                         </div>
+                            <div class="col-sm-2">
+                                <h4 >Số lượng </h4>
+                            </div>
+                           <div class = "col-sm-3">
+                            <input class ="bootstrap-touchspin" width="5"id="{{this.id}}" type="text" value="{{this.number}}" name="cartItem_{{this.id}}">
                         </div>
-                   </div>
+                        <div class = "col-sm-2">
+                           <button class = "myButton"name = "removeButton_{{this.id}}"id ="{{this.id}}" >Xóa</button>
+                        </div>
+                        </div>
+                  
                  {{/each}}
                   
-                   </div>
-                   <div id = "totalMoney">
-                   <p>Giá tổng cộng: {{totalPrice}}</p>
-                   </div>
+                  
+                   
+                  
+                   
                    </section>
-                       <div class="row">
-                    <div class="col-lg-8">
+                     <div class="row">
+                        <div class="col-sm-7">
+                        
                         </div>
-                        <div class = "row">
-                            <a href = "/buy/{{totalPrice}}"><button class="myButton">Buy</button></a>
+                        <div class = "col-sm-4">
+                             <h3><strong id = "totalMoney" >Giá tổng cộng: {{totalPrice}}</strong></h3>
+                           
+                        </div> 
+                        </div>
+                       <div class="row">
+                    <div class="col-sm-8"></div>
+                        <div class = "col-sm-4">
+                            <a href = "/buy/{{totalPrice}}"><button class="myButton">Mua</button></a>
                         </div>
                         </div> 
                   
-        
+         </div>
     

@@ -1,7 +1,13 @@
 
 <form action="search" method="get">
-  <p>Lọc</p>
+  
+  
+  <div class = "row">
+    <div class = "col-lg-1">Tên tác giả:
+      </div>
    <input type="text" name="author" >
+   <div class = "col-lg-1">Thể loại:
+      </div>
   <select class="select"name = "type" id="books-type" >
     <option selected="selected" value = "1">Tất cả</option>
     <option value="light novel">light novel</option>
@@ -10,18 +16,29 @@
     <option value="Sách giáo trình">Giáo trình</option>
     
 </select>
+<div class = "col-lg-1">Giá:
+      </div>
 <select class="select"name = "price" id="cost" >
-   <option selected="selected" value = "1"></option>
+   <option selected="selected" value = "1">Không</option>
     <option value="2">Nhỏ hơn 50000đ</option>
     <option value="3">Từ 50000đ tới 100000đ</option>
     <option value="4">Từ 100000đ tới 200000đ</option>
     <option value="5">Trên 200000</option>
     
 </select>
+<div class = "col-lg-2">Sắp xếp theo:
+      </div>
 <select class="select"name = "value" id="Orderby" >
-   <option selected="selected" value = "1"></option>
-    <option value="ASC">Tăng dần</option>
-    <option value="DESC">Giảm dần</option>
+   <option selected="selected" value = "1">Không</option>
+    <option value="2">Tăng dần A-Z</option>
+    <option value="3">Giảm dần Z-A</option>
+    <option value="4">Giá tăng dần</option>
+    <option value="5">Giá tăng dần</option>
+    <option value="6">Gần đây nhất</option>
+    </div>
+    
+
+
     
 </select>
 

@@ -16,9 +16,7 @@ router.get('/confirmation/:id', function(req, res) {
   res.redirect('/login');
 });
 
-router.get('/shiping', function(req, res) {
-  res.render('shiping', { title: 'Express',isAuthenticate:req.isAuthenticated() });
-});
+
 /*router.get('/search',async function(req, res) {
   
  //con.filter(req,res);
