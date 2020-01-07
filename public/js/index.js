@@ -87,30 +87,44 @@ const cmt = $('input[name="thêm bình luận"]').val();
     console.log('xxx');
 })
 })
-$("input[name='demo3']").TouchSpin(function()
-{
-    initval: $(number).attr('value');
-    const id = $(this).val();
-    console.log(id);
-    
-    
-    $.get('/add/cart/'+id,function() {
-        alert( 'success' );
-      })
-       
-       .done(function(res) {
-           console.log('hi minna');
-            if (res.success) {
-            console.log('id from ajax call is', res);
-           
 
-           
-        } else {
-            console.log('error...ajax');
-           
-            }
-})
+$("input[name^='cartItem_']").TouchSpin(function()
+{
+    min:1;
 });
+$("input[name^='cartItem_']").on('touchspin.on.stopspin',(function()
+{
+   
+    const val = $(this).val();
+    const id = $(this).attr('id');
+    console.log('val is '+id);
+    console.log('id is '+val);
+    
+    $.ajax({
+        url: '/add/cart2' ,
+        method: 'GET',
+        data: { value:val,id : id },
+        
+       
+        
+        }).done(function(res) {
+
+            //console.log('nono')+res ;
+          console.log('res is '+res);
+         
+            $('#totalMoney').html(" <p>Giá tổng cộng:"+res+"</p>");
+            
+          
+           
+    })
+    .fail(function() {
+        console.log('fail');
+    })
+    .always(function(){
+      
+        console.log('xxx');
+    })
+}));
 /*function addCmt(productId,userId)
 {
 if(userId ==undefined)

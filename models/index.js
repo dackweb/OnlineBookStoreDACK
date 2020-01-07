@@ -63,10 +63,10 @@ module.exports.UpdateConfirmStatus = async function (req,res)
    con.query('UPDATE users SET confirmed = 1 WHERE email ='+mysql.escape(req.params.id));
 
 }
-module.exports.getID = async function (req,res)
+module.exports.getID = async function (id)
 {
    
-  return await new Promise((resolve, reject) => con.query('SELECT * FROM product WHERE id ='+mysql.escape(req.params.id), (err, results) => {
+  return await new Promise((resolve, reject) => con.query('SELECT * FROM product WHERE id ='+id, (err, results) => {
     if (err) {
       reject(err)
     } else {
@@ -290,16 +290,147 @@ module.exports.addCMT =async  function(req,res)
       })
     })
 }
-module.exports.getAllCmt = async function (id)
+module.exports.test =  async function (req,res)
+{
+  return await new Promise((resolve, reject) =>{
+   
+  var numRows;
+  
+  var numPerPage = 8;
+  var page = parseInt(req.query.page,10) || 1;
+  var numPages;
+  var skip = (page-1) * numPerPage;
+  // Here we compute the LIMIT parameter for MySQL query
+
+  var limit = skip + ',' + numPerPage;
+  console.log(limit);
+ con.query('SELECT count(*) as numRows FROM product',function(err,results) {
+  if (err) {
+    reject(err);}
+    numRows = results[0].numRows;
+    numPages = Math.ceil(numRows / numPerPage);
+   
+    
+    console.log('pages:'+ page);
+    console.log('number of pages:'+ numPages);
+    console.log('npp is '+req.query.npp);
+    con.query('SELECT * FROM product ORDER BY ID LIMIT ' + limit,function(err,results) {
+      if (err) {
+        reject(err);}
+      var responsePayload = {
+        results: results,
+        sumPage: numPages
+      };
+     
+        responsePayload.pagination = {
+          current: page,
+          perPage: numPerPage,
+          previous: page > 0 ? page - 1 : undefined,
+          next: page < numPages - 1 ? page + 1 : undefined
+        }
+     
+      resolve(responsePayload);
+    })
+  })
+ 
+  
+})
+}
+module.exports.getCmt = async function (req)
 {
    
-  return await new Promise((resolve, reject) => con.query('SELECT * FROM cmt WHERE productID = '+mysql.escape(id)+'ORDER BY date DESC', (err, results) => {
+  return await new Promise((resolve, reject) =>{
+   
+    var numRows;
+    
+    var numPerPage = 4;
+    var page = parseInt(req.query.page,10) || 1;
+    var numPages;
+    var skip = (page-1) * numPerPage;
+    // Here we compute the LIMIT parameter for MySQL query
+  
+    var limit = skip + ',' + numPerPage;
+    console.log(limit);
+   con.query('SELECT count(*) as numRows FROM cmt WHERE productID ='+mysql.escape(req.query.id),function(err,results) {
     if (err) {
-      reject(err)
-    } else {
-      resolve(results);
-    }
-  }));
+      reject(err);}
+      numRows = results[0].numRows;
+      numPages = Math.ceil(numRows / numPerPage);
+     
+      
+      console.log('pages:'+ page);
+      console.log('number of pages:'+ numPages);
+    
+      con.query('SELECT * FROM cmt WHERE productID = '+mysql.escape(req.query.id)+' ORDER BY date DESC LIMIT ' + limit,function(err,results) {
+        if (err) {
+          reject(err);}
+          console.log(results);
+        var responsePayload = {
+          results: results,
+          sumPage: numPages
+        };
+       
+          responsePayload.pagination = {
+            current: page,
+            perPage: numPerPage,
+            previous: page > 0 ? page - 1 : undefined,
+            next: page < numPages - 1 ? page + 1 : undefined
+          }
+       
+        resolve(responsePayload);
+      })
+    })
+   
+    
+  })
+}
+module.exports.getCmt2 = async function (req)
+{
+   
+  return await new Promise((resolve, reject) =>{
+   
+    var numRows;
+    
+    var numPerPage = 4;
+    var page = parseInt(req.query.page,10) || 1;
+    var numPages;
+    var skip = (page-1) * numPerPage;
+    // Here we compute the LIMIT parameter for MySQL query
+  
+    var limit = skip + ',' + numPerPage;
+    console.log(limit);
+   con.query('SELECT count(*) as numRows FROM cmt WHERE productID ='+mysql.escape(req.params.id),function(err,results) {
+    if (err) {
+      reject(err);}
+      numRows = results[0].numRows;
+      numPages = Math.ceil(numRows / numPerPage);
+     
+      
+      console.log('pages:'+ page);
+      console.log('number of pages:'+ numPages);
+    
+      con.query('SELECT * FROM cmt WHERE productID = '+mysql.escape(req.params.id)+' ORDER BY date DESC LIMIT ' + limit,function(err,results) {
+        if (err) {
+          reject(err);}
+          console.log(results);
+        var responsePayload = {
+          results: results,
+          sumPage: numPages
+        };
+       
+          responsePayload.pagination = {
+            current: page,
+            perPage: numPerPage,
+            previous: page > 0 ? page - 1 : undefined,
+            next: page < numPages - 1 ? page + 1 : undefined
+          }
+       
+        resolve(responsePayload);
+      })
+    })
+   
+    
+  })
 }
 module.exports.getCmtPagination =  async function (req,res)
 {
@@ -346,4 +477,54 @@ module.exports.getCmtPagination =  async function (req,res)
  
   
 })
+}
+module.exports.updateViews =async function(req,res)
+{
+  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM product WHERE id = '+mysql.escape(req.params.id),
+ async (err, results) => {
+    if (err) {
+      reject(err)
+    } else {
+     
+     
+      con.query('UPDATE product SET countViews = ? WHERE id = ?',
+      [results[0].countViews+1,req.params.id],async (err, result) => {
+        if (err) {
+          reject(err)
+        } else {
+         
+         console.log(results[0].countViews+1);
+         
+         resolve(results[0].countViews+1);
+        }
+      })
+      
+    }
+  })
+});
+
+}
+module.exports.updateBuys =async function(id,number)
+{
+  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM product WHERE id = '+id,
+ async (err, results) => {
+    if (err) {
+      reject(err)
+    } else {
+      
+      con.query('UPDATE product SET countBuys = ? WHERE id = ?',
+      [results[0].countBuys+number,id], (err, result) => {
+        if (err) {
+          reject(err)
+        } else {
+         // console.log(results);
+         
+          resolve(results[0].countBuys+number);
+        }
+      })
+      
+    }
+  })
+});
+
 }

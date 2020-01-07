@@ -1,16 +1,18 @@
 var express = require('express');
 
 var local = require('../models/localStorage');
-
+var con = require('../models/index');
 var router = express.Router();
 
 
 /* GET users listing. */
-router.get('/',   async function (req, res, next) {
+router.get('/:id',   async function (req, res, next) {
 
     if(req.isAuthenticated())
     {
-   local.addOrder(req,res);
+        //await local.TransferHistory(req,res);
+        //await con.updateBuys();
+        await local.buySuccess(req,res);
     res.redirect('/');
     
 

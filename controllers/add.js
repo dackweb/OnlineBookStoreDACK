@@ -12,17 +12,31 @@ router.get('/cart/:id',  async function (req, res) {
 
    
      local.addAnoMyous(req,res);
-     local.seeCart(req,res);
+    // local.seeCart(req,res);
    //res.redirect('back');
 
 
 
        
 });
+router.get('/cart2',  async function (req, res) {
+  var sum = await local.updateCart(req,res);
+ 
+      res.send(''+sum);
+       
+  });
+  router.get('/sum',  async function (req, res) {
+    
+      res.send(result);
+});
 router.get('/getCMT/:id',async function(req,res)
 {
-var result = await db.getAllCmt(req.params.id);
-  return res.json({res:result});
+var result = await db.getCmt(req.params.id);
+res.render('type', {x:req.params.id, results: result.results,author:req.query.author,type: req.query.type,price:req.query.price,pagination:{
+  page:result.pagination.current,
+  pageCount:result.sumPage,
+  
+}})
 })
 
 router.post('/user/cmt',  async function (req, res) {
@@ -39,6 +53,7 @@ router.post('/user/cmt',  async function (req, res) {
   {
   
       db.addCMT(req,res);
+      res.sendStatus(200).send('OK');
      // res.render('single-product'+req.body.cmtid);
       
       //res.redirect('back');

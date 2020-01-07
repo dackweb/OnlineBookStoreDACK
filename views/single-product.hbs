@@ -22,6 +22,8 @@
                         <li>
                             <span class="name">Tên: {{this.name}}</span>
                             <p>Giá {{this.price}}</p>
+                             <p>Lượt xem: {{this.countViews}}</p>
+                            <p>Lượt mua: {{this.countBuys}}</p>
                             <a href = "/search/author/{{this.author}}"><p>Tác giả: {{this.author}}</p></a>
                             <a href = "/search/type/{{this.type}}"><p>Loại sách: {{this.type}}</p></a>
                            
@@ -51,6 +53,7 @@
                         <div class="item">
                             <img src="{{this.img}}" alt="img">
                             <h3>{{this.name}}</h3>
+                           
                             <h6><span class="price">{{this.price}}</span> / <a href="/single-product/{{this.id}}">Xem</a></h6>
                             <div class="hover">
                                 <a href="/single-product/{{this.id}}">
@@ -125,5 +128,18 @@
             
         </div>
          </div>
+          <ul class="pagination pagination-centered">
+   
+    {{#paginate pagination type="previous"}}
+      <li {{#if disabled}}class=" disabled"{{/if}}><a class="page-link"href="{{cmt ../x}}&page={{n}}">Prev</a></li>
+    {{/paginate}}
+    {{#paginate pagination type="middle" limit="3"}}
+      <li {{#if active}}class="active"{{/if}}><a class="page-link"href="{{cmt ../x}}&page={{n}}">{{n}}</a></li>
+    {{/paginate}}
+    {{#paginate pagination type="next"}}
+      <li {{#if disabled}}class="disabled"{{/if}}><a class="page-link"href="{{cmt ../x}}&page={{n}}">Next</a></li>
+    {{/paginate}}
+    
+  </ul>
     
     
