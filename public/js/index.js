@@ -36,7 +36,7 @@ $(document).ready(function() {
     console.log(id);
     
     
-    $.get('/add/cart/'+id,function() {
+    $.get('/crud/add/cart/'+id,function() {
         
       })
        
@@ -54,7 +54,7 @@ $(document).ready(function() {
            
             }
 })
-    
+ 
 })
 $( "#addCMT" ).submit(function(e)
 {
@@ -64,11 +64,14 @@ $( "#addCMT" ).submit(function(e)
  //console.log( $(#.val());
  
  const user = $(userid).attr('value');
-
+if(user == "")
+{
+    $(location).attr('href', '/login')
+}
 const cmt = $('input[name="thêm bình luận"]').val();
 
  $.ajax({
-    url: '/add/user/cmt' ,
+    url: '/crud/add/user/cmt' ,
     method: 'POST',
     data: { cmtid: id,userid:user,cmt:cmt }
    
@@ -103,7 +106,7 @@ $("input[name^='cartItem_']").on('touchspin.on.stopspin',(function()
     console.log('id is '+val);
     
     $.ajax({
-        url: '/add/cart2' ,
+        url: 'crud/add/cart2' ,
         method: 'GET',
         data: { value:val,id : id },
         

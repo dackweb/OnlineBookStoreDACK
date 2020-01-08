@@ -1,28 +1,9 @@
 var express = require('express');
 //var singleProductController = require('./routes/single-product');
-var Handlebars = require('handlebars');
+var local = require('../models/Storage')
 var db=require('../models/index')
 var router = express.Router();
-Handlebars.registerHelper('filter', function(res) {
- 
-    return 'search?author='+res.author+ '&type='+res.type+'&price='+res.price+'&value='+res.value;
-   });
-   Handlebars.registerHelper('cmt', function(res) {
-   
-    return 'cmt?id='+res;
-   });
-   Handlebars.registerHelper('search', function(res) {
-   
-   if(res.author !=undefined)
-   {
-       return 'search?author='+res.author;
-   }
-   else if(res.type!=undefined)
-   {
-    '/type/author='+res.author;
-   }
-   
-   });
+
   
 /* GET users listing. */
 /*router.get('/', async function(req, res,) {
@@ -42,7 +23,7 @@ Handlebars.registerHelper('filter', function(res) {
           page:result.pagination.current,
           pageCount:result.sumPage,
           
-        }})
+        },length:local.getStorageLength()})
          
         }); 
 router.get('/type/:id',  async function (req, res) {
@@ -58,5 +39,17 @@ router.get('/author/:id',  async function (req, res) {
     res.render('type', { results:await db.getAuthor(req,res)});
            
     });
+    router.get('/searchName',  async function (req, res) {
+      console.log('ya');
+      var result = await db.searchName(req,res);
+      console.log(result);
+      res.render('simpleSearch',{x:req.query,results: result.results,pagination:{
+        page:result.pagination.current,
+        pageCount:result.sumPage
+    },length:local.getStorageLength()
+             
+      })
+    })
+      
     
 module.exports = router;

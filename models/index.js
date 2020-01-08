@@ -85,11 +85,7 @@ module.exports.getUsername = async function (req,res)
     }
   }));
 }
-module.exports.sendEmail = async function (req,res)
-{
-  
-}
-module.exports.test =  async function (req,res)
+module.exports.shop =  async function (req,res)
 {
   return await new Promise((resolve, reject) =>{
    
@@ -265,12 +261,58 @@ module.exports.getSortQuery =  async function (req,res)
 });
  
 }
+module.exports.searchName = async function(req,res)
+{
+  return await new Promise((resolve, reject) =>{
+   
+    var numRows;
+    
+    var numPerPage = 4;
+    var page = parseInt(req.query.page,10) || 1;
+    var numPages;
+    var skip = (page-1) * numPerPage;
+    // Here we compute the LIMIT parameter for MySQL query
+  
+    var limit = skip + ',' + numPerPage;
+    console.log(limit);
+   con.query("SELECT count(*) as numRows FROM product WHERE name like '%"+req.query.name+"%'",function(err,results) {
+    if (err) {
+      reject(err);}
+      numRows = results[0].numRows;
+      numPages = Math.ceil(numRows / numPerPage);
+     
+      
+      console.log('pages:'+ page);
+      console.log('number of pages:'+ numPages);
+      console.log('npp is '+req.query.npp);
+      con.query("SELECT * FROM product WHERE name like '%"+req.query.name+"%' ORDER BY ID LIMIT " + limit,function(err,results) {
+        if (err) {
+          reject(err);}
+        var responsePayload = {
+          results: results,
+          sumPage: numPages
+        };
+       
+          responsePayload.pagination = {
+            current: page,
+            perPage: numPerPage,
+            previous: page > 0 ? page - 1 : undefined,
+            next: page < numPages - 1 ? page + 1 : undefined
+          }
+       
+        resolve(responsePayload);
+      })
+    })
+   
+    
+  })
+}
 module.exports.filter = async function(req,res)
 {
   return await new Promise(async (resolve,reject) =>{
     var numRows;
   
-  var numPerPage = 2;
+  var numPerPage = 4;
   var page = parseInt(req.query.page,10) || 1;
   var numPages;
   var skip = (page-1) * numPerPage;
@@ -330,52 +372,7 @@ module.exports.addCMT =async  function(req,res)
       })
     })
 }
-module.exports.test =  async function (req,res)
-{
-  return await new Promise((resolve, reject) =>{
-   
-  var numRows;
-  
-  var numPerPage = 8;
-  var page = parseInt(req.query.page,10) || 1;
-  var numPages;
-  var skip = (page-1) * numPerPage;
-  // Here we compute the LIMIT parameter for MySQL query
 
-  var limit = skip + ',' + numPerPage;
-  console.log(limit);
- con.query('SELECT count(*) as numRows FROM product',function(err,results) {
-  if (err) {
-    reject(err);}
-    numRows = results[0].numRows;
-    numPages = Math.ceil(numRows / numPerPage);
-   
-    
-    console.log('pages:'+ page);
-    console.log('number of pages:'+ numPages);
-    console.log('npp is '+req.query.npp);
-    con.query('SELECT * FROM product ORDER BY ID LIMIT ' + limit,function(err,results) {
-      if (err) {
-        reject(err);}
-      var responsePayload = {
-        results: results,
-        sumPage: numPages
-      };
-     
-        responsePayload.pagination = {
-          current: page,
-          perPage: numPerPage,
-          previous: page > 0 ? page - 1 : undefined,
-          next: page < numPages - 1 ? page + 1 : undefined
-        }
-     
-      resolve(responsePayload);
-    })
-  })
- 
-  
-})
-}
 module.exports.getCmt = async function (req)
 {
    

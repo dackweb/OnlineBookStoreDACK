@@ -38,6 +38,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 var index = require('./routes/index');
+require('./helpers/helper')
 Handlebars.registerHelper('paginate', paginate);
 app.use(function(req,res,next){
  res.locals.reqe = req.query;

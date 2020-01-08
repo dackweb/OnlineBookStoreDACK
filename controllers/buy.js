@@ -1,6 +1,6 @@
 var express = require('express');
 
-var local = require('../models/localStorage');
+var local = require('../models/Storage');
 var con = require('../models/index');
 var router = express.Router();
 

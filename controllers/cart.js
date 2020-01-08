@@ -1,6 +1,6 @@
 var con  = require('../models/index.js');
 var express = require('express');
-var local = require('../models/localStorage.js');
+var local = require('../models/Storage.js');
 var router = express.Router();
 
 /* GET home page. */

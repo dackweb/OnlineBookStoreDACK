@@ -1,12 +1,12 @@
 var con  = require('../models/index.js');
 var express = require('express');
-var local = require('../models/localStorage.js');
+var local = require('../models/Storage.js');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res,) {
   
-  res.render('home', { title: 'bookstore',user:req.user,isAuthenticate:req.isAuthenticated()} );
+  res.render('home', { title: 'bookstore',user:req.user,isAuthenticate:req.isAuthenticated(),length:local.getStorageLength()} );
  
 });
 
@@ -34,17 +34,17 @@ router.get('/searchName',async function(req, res) {
   
   //con.filter(req,res);
   // console.log(strUser);
-  res.render('type', { results:await con.filter(req,res)});
+  res.render('type', { results:await con.filter(req,res),length:local.getStorageLength()});
  });
 router.get('/faq', function(req, res) {
   res.render('faq', { title: 'faq',isAuthenticate:req.isAuthenticated() });
 });
 
 router.get('/filter', function(req, res) {
-  res.render('filter', { title: 'Tìm kiếm nâng cao',isAuthenticate:req.isAuthenticated() });
+  res.render('filter', { title: 'Tìm kiếm nâng cao',isAuthenticate:req.isAuthenticated(),length:local.getStorageLength() });
 });
 router.get('/about', function(req, res) {
-  res.render('about', { title: 'Về chúng tôi',isAuthenticate:req.isAuthenticated() });
+  res.render('about', { title: 'Về chúng tôi',isAuthenticate:req.isAuthenticated(),length:local.getStorageLength() });
  
 });
 router.get('/single-product/cmt',  async function (req, res) {
@@ -61,7 +61,7 @@ router.get('/single-product/cmt',  async function (req, res) {
               page:cmtResult.pagination.current,
               pageCount:cmtResult.sumPage,
               
-            }});
+            },length:local.getStorageLength()});
            
 
   
@@ -82,7 +82,7 @@ router.get('/single-product/:id',  async function (req, res) {
               page:cmtResult.pagination.current,
               pageCount:cmtResult.sumPage,
               
-            }});
+            },length:local.getStorageLength()});
            
 
   

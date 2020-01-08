@@ -161,6 +161,8 @@ var nodemailer = require('nodemailer');
                 return  done(null,false,req.flash('loginMessage','Tài khoản hoặc mật khẩu không hợp lệ'))
                 if(!rows[0].confirmed)
                 return done(null,false,req.flash('loginMessage','Bạn chưa kích hoạt tài khoản'));
+                if(rows[0].isLocked)
+                return done(null,false,req.flash('loginMessage','Tài khoản của bạn đã bị khóa'));
                  return done(null,rows[0]);
               
            
