@@ -1,0 +1,48 @@
+<div class="breadcrumb">
+        <div class="container">
+            <a class="breadcrumb-item" href="home">Home</a>
+            <span class="breadcrumb-item active">Shop</span>
+        </div>
+    </div>
+    
+    <section class="static about-sec">
+        <div class="container">
+            <h2>Giỏ hàng</h2>
+            
+                
+                    {{#each results}}
+                  
+                        <div class="row">
+                            <div class="col-sm-3">
+                        
+                                <img src="{{this.img}}" alt="img" height="100" width="100">
+                                <h3>{{this.name}}</h3>
+                                <p><span class="price">Giá: {{this.price}}</span></p>
+                        
+                         </div>
+                            <div class="col-sm-2">
+                                <h3 >Số lượng:{{this.number}} </h3>
+                            </div>
+                           
+                        </div>
+                  
+                 {{/each}}
+                  
+                  
+                   
+                  
+                   
+                   </section>
+                     <div class="row">
+                        <div class="col-sm-7">
+                        
+                        </div>
+                        <div class = "col-sm-4">
+                             <h3><strong id = "totalMoney" >Giá tổng cộng: {{totalPrice}}</strong></h3>
+                        
+                        </div>
+                     
+                        </div> 
+                  
+         </div>
+    

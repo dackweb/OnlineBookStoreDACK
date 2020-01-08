@@ -6,7 +6,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res,) {
   
-  res.render('home', { title: 'Express',user:req.user,isAuthenticate:req.isAuthenticated()} );
+  res.render('home', { title: 'bookstore',user:req.user,isAuthenticate:req.isAuthenticated()} );
  
 });
 
@@ -37,14 +37,14 @@ router.get('/searchName',async function(req, res) {
   res.render('type', { results:await con.filter(req,res)});
  });
 router.get('/faq', function(req, res) {
-  res.render('faq', { title: 'Express',isAuthenticate:req.isAuthenticated() });
+  res.render('faq', { title: 'faq',isAuthenticate:req.isAuthenticated() });
 });
 
 router.get('/filter', function(req, res) {
-  res.render('filter', { title: 'Express',isAuthenticate:req.isAuthenticated() });
+  res.render('filter', { title: 'Tìm kiếm nâng cao',isAuthenticate:req.isAuthenticated() });
 });
 router.get('/about', function(req, res) {
-  res.render('about', { title: 'Express',isAuthenticate:req.isAuthenticated() });
+  res.render('about', { title: 'Về chúng tôi',isAuthenticate:req.isAuthenticated() });
  
 });
 router.get('/single-product/cmt',  async function (req, res) {
@@ -55,7 +55,7 @@ router.get('/single-product/cmt',  async function (req, res) {
   var userid = '';
           if(req.user!=undefined)
             userid = req.user.id;
-          res.render('single-product', {x:req.query.id,userid:userid,cmtid:req.params.id,
+          res.render('single-product', {title:'chi-tiết-sản-phẩm',x:req.query.id,userid:userid,cmtid:req.params.id,
             result:result,results:await con.getType2(result[0].type),
             isAuthenticate:req.isAuthenticated(),cmt:cmtResult.results, pagination:{
               page:cmtResult.pagination.current,

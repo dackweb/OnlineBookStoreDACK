@@ -1,0 +1,38 @@
+<div class="breadcrumb">
+        <div class="container">
+            <a class="breadcrumb-item" href="home">Home</a>
+            <span class="breadcrumb-item active">Shop</span>
+        </div>
+    </div>
+    
+    <section class="static about-sec">
+        <div class="container">
+            <h2>Lịch sử</h2>
+            
+                
+                    {{#each results}}
+                  
+                        <div class="row">
+                            <div class="col-sm-3">
+                        
+                                <div>Mã: {{this.productID}}</div>
+                               
+                                <p><span class="price">Giá: {{this.price}}</span></p>
+                        
+                         </div>
+                            <div class="col-sm-3">
+                                <p>Thời gian</p>
+                                <p>{{this.date}}</p>
+                            </div>
+                           <div class = "col-sm-3">
+                          <p>Trạng thái mua hàng</p>
+                          <p>{{this.status}}</p>
+                        </div>
+                        <div class = "col-sm-3">
+                           <a href = "history/orderDetail/{{this.orderID}}">Xem chi tiết</a>
+                        </div>
+                        </div>
+                  
+                 {{/each}}
+                   </section>
+                     

@@ -24,8 +24,8 @@
                             <p>Giá {{this.price}}</p>
                              <p>Lượt xem: {{this.countViews}}</p>
                             <p>Lượt mua: {{this.countBuys}}</p>
-                            <a href = "/search/author/{{this.author}}"><p>Tác giả: {{this.author}}</p></a>
-                            <a href = "/search/type/{{this.type}}"><p>Loại sách: {{this.type}}</p></a>
+                            <a href = "/search?author={{this.author}}&type=1&price=1&value=1"><p>Tác giả: {{this.author}}</p></a>
+                            <a href = "/search?author=&type={{this.type}}&price=1&value=1"><p>Loại sách: {{this.type}}</p></a>
                            
                             <p>{{this.description}}</p>
 

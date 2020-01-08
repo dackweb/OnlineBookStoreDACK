@@ -6,13 +6,17 @@ var router = express.Router();
 /* GET home page. */
 router.get('/',async function(req, res,) {
   //local.addAnoMyous(req,res);
- await local.addOrder(req,res);
-  var result = await local.transferOrder(req,res);
+ 
  
   if(req.isAuthenticated())
   {
+    console.log(req.user.id);
+    await local.addOrder(req,res);
+    console.log(req.user.id);
+  var result = await local.transferOrder(req,res);
     //res.redirect('/');
-    var sum = await local.sum();
+    console.log(req.user.id);
+    var sum = await local.sum(req,res);
     res.render('cart', { title: 'Express',user:req.user,isAuthenticate:req.isAuthenticated(),results:result,totalPrice:sum} );
   }
   else

@@ -227,7 +227,44 @@ module.exports.getTypeQuery =  async function (req,res)
 });
  
 }
-
+module.exports.getSortQuery =  async function (req,res)
+{
+  return await new Promise((resolve,reject) =>{
+     if(req.query.value =="1")
+     {
+      var sqlQuery = "";
+      resolve(sqlQuery);
+    }
+    
+    else if(req.query.value =="2")
+    {
+     var sqlQuery = "ORDER BY name ASC";
+     resolve(sqlQuery);
+   }
+   else if(req.query.value =="3")
+    {
+      var sqlQuery = "ORDER BY name DESC";
+     resolve(sqlQuery);
+   }
+   else if(req.query.value =="4")
+    {
+      var sqlQuery = "ORDER BY price ASC";
+     resolve(sqlQuery);
+   }
+   else if(req.query.value =="5")
+    {
+      var sqlQuery = "ORDER BY price DESC";
+     resolve(sqlQuery);
+   }
+   else if(req.query.value =="6")
+    {
+      var sqlQuery = "ORDER BY id DESC";
+     resolve(sqlQuery);
+   }
+  
+});
+ 
+}
 module.exports.filter = async function(req,res)
 {
   return await new Promise(async (resolve,reject) =>{
@@ -240,6 +277,7 @@ module.exports.filter = async function(req,res)
   var limit = skip + ',' + numPerPage;
   var typeQuery = await this.getTypeQuery(req,res);
   var priceQuery = await this.getCostQuery(req,res);
+  var sort = await this.getSortQuery(req,res);
   //var sql = "SELECT count(*) as numRows FROM product where author like '%"+req.query.author+"%' "+typeQuery+priceQuery;
   
   con.query("SELECT count(*) as numRows FROM product where author like '%"+req.query.author+"%' "+typeQuery+priceQuery,function(err,results) {
@@ -248,7 +286,9 @@ module.exports.filter = async function(req,res)
       numRows = results[0].numRows;
       numPages = Math.ceil(numRows / numPerPage);
       console.log('limit is'+limit);
-  con.query("SELECT * FROM product where author like '%"+req.query.author+"%' "+typeQuery+priceQuery+" ORDER BY ID LIMIT "+limit,(err, results) => {
+      var stupidquery = "SELECT * FROM product where author like '%"+req.query.author+"%' "+typeQuery+" " +priceQuery+" "+sort+" LIMIT "+limit;
+      console.log(stupidquery);
+  con.query("SELECT * FROM product where author like '%"+req.query.author+"%' "+typeQuery+" " +priceQuery+" "+sort+" LIMIT "+limit,(err, results) => {
     if (err) {
       reject(err);}
      
@@ -524,6 +564,28 @@ module.exports.updateBuys =async function(id,number)
       })
       
     }
+  })
+});
+
+}
+module.exports.viewHistory =async function(req,res)
+{
+  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM history WHERE userID = '+req.user.id,
+  (err, results) => {
+    if (err) {
+      reject(err)
+    } resolve(results);
+  })
+});
+
+}
+module.exports.viewOrderDetail =async function(req,res)
+{
+  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM orderdetail WHERE orderID = '+req.params.id,
+  (err, results) => {
+    if (err) {
+      reject(err)
+    } resolve(results);
   })
 });
 

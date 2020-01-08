@@ -7,10 +7,11 @@ var shopController = require('../controllers/shop');
 var searchController = require('../controllers/search');
 //var singleProductController = require('../controllers/single-product');
 var addController = require('../controllers/add');
-var filterController = require('../controllers/searchpage');
+var filterController = require('../controllers/search');
 var BuyController = require('../controllers/buy');
 var cartController = require('../controllers/cart');
 var crudController = require('../controllers/crud');
+var historyController = require('../controllers/history');
 require('../controllers/users')(router,passport);
 
 router.use('/', indexController);
@@ -24,4 +25,5 @@ router.use('/add',addController);
 router.use('/crud',crudController);
 router.use('/cart',cartController);
 router.use('/buy',BuyController);
+router.use('/history',historyController);
 module.exports = router;

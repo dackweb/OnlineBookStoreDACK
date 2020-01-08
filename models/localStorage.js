@@ -102,7 +102,7 @@ module.exports.seeCart= function(req,res)
    
   
 }
-module.exports.asyncTransfer=async function(key)
+module.exports.asyncTransfer=async function(req,key)
 {
   
   return await new Promise(async (resolve,reject) =>{
@@ -112,20 +112,39 @@ module.exports.asyncTransfer=async function(key)
     reject(err);
     
    
-   
-      var InsertQuery = "INSERT INTO cart(id,number,price,type,img) values (?,?,?,?,?)";
-      con.query(InsertQuery,[result[0].id,localStorage.getItem(key),result[0].price,result[0].type,result[0].img],function(err,results)
+    con.query('SELECT * FROM cart WHERE id = '+mysql.escape(key)+' and userID = '+req.user.id,function(err,res)
+    {
+      if(err)
+        reject(err);
+        if(res[0] != undefined)
         {
-          if(err)
-            reject(err);
-          localStorage.removeItem(key);
-          console.log('key is '+key);
+         
+          var sum = parseInt(res[0].number)+parseInt(localStorage.getItem(key));
+          var Query = 'UPDATE cart SET number = '+sum+ ' WHERE id = '+ mysql.escape(key)+' and userID = '+req.user.id;
+          console.log(stupidQuery);
+         
+          con.query(Query,function(err,results)
+          {
+            if(err)
+              reject(err);
+          });
+        }
+        else{
+          console.log('number are'+ localStorage.getItem(key));
+          var InsertQuery = "INSERT INTO cart(id,number,price,type,img,userID) values (?,?,?,?,?,?)";
+          con.query(InsertQuery,[result[0].id,localStorage.getItem(key),result[0].price,result[0].type,result[0].img,req.user.id],function(err,results)
+            {
+              if(err)
+                reject(err);
+            });
           
-        });
-
+        }
+        localStorage.removeItem(key);
+        console.log('key is '+key);
+        
         resolve(result);
       })
-      
+    })
     });
 }
 module.exports.asyncTransferBuy=async function(orderID,result)
@@ -177,7 +196,7 @@ module.exports.TransferHistory=async function(req,res)
 }
  
 
-module.exports.addOrder= async function()
+module.exports.addOrder= async function(req,res)
 {
   return await new Promise(async (resolve,reject) =>{
     var promises= [];
@@ -187,7 +206,7 @@ module.exports.addOrder= async function()
       var key = localStorage.key(i);
       console.log(key);
       promises.push(
-      this.asyncTransfer(key));
+      this.asyncTransfer(req,key));
       
     
   
@@ -211,7 +230,7 @@ module.exports.buySuccess= async function(req,res)
     var orderID = await this.TransferHistory(req,res);
     var promises= [];
     var module = this;
-    con.query('SELECT * FROM cart', function(err,result){
+    con.query('SELECT * FROM cart WHERE userID = '+req.user.id, function(err,result){
     if(err)
       reject(err);
      
@@ -222,7 +241,13 @@ module.exports.buySuccess= async function(req,res)
   });
 Promise.all(promises)
 .then((results) => {
-  resolve(results);
+  console.log('final');
+  con.query('DELETE FROM cart WHERE userID = '+ req.user.id,function(err,res){
+      if(err)
+        reject(err);
+      resolve(res);
+  })
+  
 })
 .catch((e) => {
     // Handle errors here
@@ -233,13 +258,13 @@ Promise.all(promises)
 
  
 }
-module.exports.sum= async function()
+module.exports.sum= async function(req,res)
 {
-  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM cart ', (err, results) => {
+  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM cart WHERE userID = '+req.user.id, (err, results) => {
     if (err) {
       reject(err)
     } else {
-      console.log(results);
+      
       var sum = 0;
      for(i in results)
      sum=results[i].price*results[i].number+sum;
@@ -248,15 +273,29 @@ module.exports.sum= async function()
     }
   })});
 }
-
-module.exports.transferOrder= async function(req,res)
+module.exports.sumDetail= async function(req,res)
 {
-  
-  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM cart ', (err, results) => {
+  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM orderdetail WHERE orderID ='+req.params.id, (err, results) => {
     if (err) {
       reject(err)
     } else {
-      console.log(results);
+     
+      var sum = 0;
+     for(i in results)
+     sum=results[i].price*results[i].number+sum;
+     
+      resolve(sum);
+    }
+  })});
+}
+module.exports.transferOrder= async function(req,res)
+{
+  
+  return await new Promise(function(resolve, reject){ con.query('SELECT * FROM cart WHERE userID = '+req.user.id, (err, results) => {
+    if (err) {
+      reject(err)
+    } else {
+      
       
       resolve(results);
     }
@@ -266,13 +305,13 @@ module.exports.updateCart =async function(req,res)
 {
  console.log('a is '+req.query.value);
  console.log('b is '+req.query.id);
-  return await new Promise(function(resolve, reject){ con.query('UPDATE `cart` SET number = ? WHERE id = ?',
-  [req.query.value,req.query.id], (err, results) => {
+  return await new Promise(function(resolve, reject){ con.query('UPDATE `cart` SET number = ? WHERE id = ? and userID = ?',
+  [req.query.value,req.query.id,req.user.id], (err, results) => {
     if (err) {
       reject(err)
     } else {
-      console.log(results);
-      con.query('SELECT * FROM cart ',async (err, results) => {
+     
+      con.query('SELECT * FROM cart WHERE userID = '+req.user.id,async (err, results) => {
         if (err) {
           reject(err)
         } else {
@@ -280,7 +319,7 @@ module.exports.updateCart =async function(req,res)
           var sum = 0;
          for(i in results)
          sum=results[i].price*results[i].number+sum;
-         console.log('sum is' +sum);
+       
           resolve(sum);
         }
       })
@@ -293,18 +332,14 @@ module.exports.removeCartItem=async function(req,res)
 {
   
   return await new Promise(async (resolve,reject) =>{
-
+    //console.log('res is'+res.user.id);
    
-   
-     
-      con.query('DELETE FROM `cart` WHERE id = '+req.params.id ,function(err,results)
+      con.query( 'DELETE FROM cart WHERE id = '+req.params.id+' and userID = '+req.user.id,function(err,results)
         {
           if(err)
             reject(err);
             resolve(results);
         });
-
-        
       })
       
    

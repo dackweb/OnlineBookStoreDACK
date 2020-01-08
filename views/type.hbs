@@ -30,6 +30,7 @@
        
          <ul class="pagination pagination-centered">
    
+   
     {{#paginate pagination type="previous"}}
       <li {{#if disabled}}class=" disabled"{{/if}}><a class="page-link"href="{{filter ../x}}&page={{n}}">Prev</a></li>
     {{/paginate}}
@@ -39,7 +40,6 @@
     {{#paginate pagination type="next"}}
       <li {{#if disabled}}class="disabled"{{/if}}><a class="page-link"href="{{filter ../x}}&page={{n}}">Next</a></li>
     {{/paginate}}
-    
   </ul>
     </div>
         

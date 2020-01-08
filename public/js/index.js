@@ -37,11 +37,13 @@ $(document).ready(function() {
     
     
     $.get('/add/cart/'+id,function() {
-        alert( 'success' );
+        
       })
        
        .done(function(res) {
+
            console.log('hi minna');
+            $("#notification").html("+1");
             if (res.success) {
             console.log('id from ajax call is', res);
            

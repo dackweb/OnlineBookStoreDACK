@@ -12,7 +12,8 @@ router.get('/cart/:id',  async function (req, res) {
 
    
      local.addAnoMyous(req,res);
-    // local.seeCart(req,res);
+     local.seeCart(req,res);
+     res.status(200).send('OK');
    //res.redirect('back');
 
 
