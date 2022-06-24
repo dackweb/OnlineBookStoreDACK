@@ -22,7 +22,7 @@
     "jade": "~1.11.0",
     "jquery": "^3.4.1",
     "jquery-ajax": "^2.1.4",
-    "jsdom": "^15.2.1",
+    "jsdom": "^16.5.0",
     "morgan": "~1.9.1",
     "node-localstorage": "^2.1.5",
     "nodemailer": "^6.4.0",
